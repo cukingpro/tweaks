@@ -1,6 +1,7 @@
 """Build flat, unsigned jailbreak APT repositories using Python and ar."""
 import gzip
 import hashlib
+import html
 import io
 import shutil
 import subprocess
@@ -43,6 +44,7 @@ def build():
         destination = OUTPUT / scheme
         (destination / "debs").mkdir(parents=True)
         entries = []
+        downloads = []
         seen = set()
         for package in sorted((ROOT / scheme / "debs").glob("*.deb")):
             fields = control_fields(package)
@@ -61,6 +63,11 @@ def build():
                 "SHA512": hashlib.sha512(data).hexdigest(),
             })
             entries.append("\n".join(f"{key}: {value}" for key, value in fields.items()))
+            downloads.append(
+                f'<li><a href="{html.escape(fields["Filename"], quote=True)}">'
+                f'{html.escape(fields.get("Name", fields["Package"]))} '
+                f'{html.escape(fields["Version"])} — tải .deb</a></li>'
+            )
             shutil.copyfile(package, destination / "debs" / package.name)
         if not entries:
             raise ValueError(f"No packages found for {scheme}")
@@ -84,6 +91,29 @@ def build():
                 data = (destination / name).read_bytes()
                 release.append(f" {hashlib.new(algorithm, data).hexdigest()} {len(data)} {name}")
         (destination / "Release").write_text("\n".join(release) + "\n")
+        url = f"https://cukingpro.github.io/tweaks/{scheme}/"
+        title = "RootHide" if scheme == "roothide" else "Rootless"
+        (destination / "index.html").write_text(f'''<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cukingpro Tweaks — {title}</title>
+<style>
+body{{font:17px/1.6 system-ui,sans-serif;max-width:760px;margin:64px auto;padding:0 24px;background:#111827;color:#e5e7eb}}
+a{{color:#93c5fd}} code{{overflow-wrap:anywhere}}
+</style>
+<h1>Cukingpro Tweaks — {title}</h1>
+<p>Thêm địa chỉ này vào Sources trong Sileo hoặc Zebra:</p>
+<p><code>{url}</code></p>
+<p><a href="sileo://source/{url}">Thêm vào Sileo</a> ·
+<a href="zbra://sources/add/{url}">Thêm vào Zebra</a></p>
+<p>Kiến trúc package: <code>{architecture}</code>.</p>
+<h2>Gói có sẵn</h2>
+<ul>{"".join(downloads)}</ul>
+<p><a href="Release">Release</a> · <a href="Packages">Packages</a> ·
+<a href="Packages.gz">Packages.gz</a> · <a href="../">Trang chủ</a></p>
+</html>
+''', encoding="utf-8")
         print(f"Built {scheme}: {len(entries)} package(s)")
 
 
