@@ -8,13 +8,17 @@ Repo Sileo/Zebra miễn phí, triển khai bằng GitHub Pages.
 
 ## Thêm bản cập nhật
 
-### Ziga No Ads 1.0.0
+### Ziga No Ads 1.1.0
 
 - Có gói Rootless và RootHide; chỉ cài gói đúng với môi trường jailbreak.
-- Hỗ trợ binary Ziga 1.34.2, UUID `9177979F-CB95-32EC-B24D-1558F4335A4A`.
+- Nhận Ziga **1.34.2 trở lên có engine Cocos ARM64 và giao diện ads tương thích**.
+- Tự dò hàm engine và địa chỉ singleton; không còn khóa UUID/địa chỉ của bản 1.34.2.
+- Nếu ABI không khớp hoặc kết quả dò không duy nhất, tweak bỏ qua. Không bảo đảm
+  mọi bản tương lai; hiện chưa có Ziga >1.34.2 để kiểm chứng trực tiếp.
 - Bật injection cho Ziga, đóng hẳn rồi mở lại app sau khi cài/gỡ.
 - Chặn banner, open-app ads qua JavaScript và interstitial; giữ video nhận thưởng.
-- Payload đã thử qua Frida; bản deb chưa được xác minh sau cài đặt trên thiết bị.
+- Payload đã thử qua Frida; resolver được kiểm tra trên artifact 1.34.2 và layout
+  dịch chuyển tổng hợp. Bản deb 1.1.0 chưa được xác minh sau cài trên thiết bị.
 
 ### Quy trình phát hành
 
