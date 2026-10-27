@@ -82,7 +82,7 @@ def build():
             f"Codename: cukingpro-{scheme}",
             f"Architectures: {architecture}",
             "Components: main",
-            f"Description: Phim4K tweaks for {scheme}",
+            f"Description: Cukingpro tweaks for {scheme}",
             f"Date: {datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')}",
         ]
         for label, algorithm in [("MD5Sum", "md5"), ("SHA256", "sha256"), ("SHA512", "sha512")]:
