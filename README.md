@@ -8,6 +8,15 @@ Repo Sileo/Zebra miễn phí, triển khai bằng GitHub Pages.
 
 ## Thêm bản cập nhật
 
+### Ziga Coach 0.1.2 — Rootless
+
+- Engine AB-JChess chạy trực tiếp trên iPhone, nút bật/tắt và cài đặt thời gian/luồng/Hash.
+- Mũi tên gợi ý, điểm/depth và tỉ lệ quân úp trên bàn Ziga.
+- Gói `iphoneos-arm64`, cài dưới `/var/jb`; yêu cầu iOS 16+ và binary Ziga 1.34.2 tương thích UUID.
+- Đã build và kiểm tra cấu trúc gói; chưa kiểm chứng trên thiết bị rootless.
+- [Tải .deb và source tương ứng](https://github.com/cukingpro/Ziga/releases/tag/ziga-coach-v0.1.2).
+- [Hướng dẫn sử dụng](https://github.com/cukingpro/Ziga/blob/main/tweak/ZigaCoach/README.vi.md).
+
 ### Ziga No Ads 1.1.1
 
 - Có gói Rootless và RootHide; chỉ cài gói đúng với môi trường jailbreak.
